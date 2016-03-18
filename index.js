@@ -50,7 +50,7 @@ S3Storage.prototype._handleFile = function (req, file, cb) {
     if (err) return cb(err)
     
     if(that.options.dirname) {
-      key = path.join(dirname, key);
+      key = path.join(that.options.dirname, key);
     }
     
     that.getContentType(req, file, function (err, contentType, _stream) {
