@@ -2,6 +2,7 @@ var aws = require('aws-sdk')
 var extend = require('xtend')
 var crypto = require('crypto')
 var stream = require('stream')
+var path = require('path')
 var fileType = require('file-type')
 
 function defaultKey (req, file, cb) {
@@ -47,7 +48,11 @@ S3Storage.prototype._handleFile = function (req, file, cb) {
   var that = this
   that.getKey(req, file, function (err, key) {
     if (err) return cb(err)
-
+    
+    if(that.options.dirname) {
+      key = path.join(dirname, key);
+    }
+    
     that.getContentType(req, file, function (err, contentType, _stream) {
       if (err) return cb(err)
 
